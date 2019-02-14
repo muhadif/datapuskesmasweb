@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <script type="text/javascript" src="assets/js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="assets/js/app.js"></script>
+    <script type="text/javascript" src="assets/js/kecamatan.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <title>Polygon Arrays</title>
+</head>
+
+<body>
+    <div>
+        <h1>Maps Pukesmas</h1>
+    </div>
+    <div style="width:100vw;height:100vh">
+        <div id="map"></div>
+        <div class="box" id="box">
+            <div class="box-title">
+                <h3>Kecamatan</h3>
+            </div>
+            <div class="box-content">
+                <table>
+                    <tr>
+                        <td>
+                            Jumlah Kasus =
+                        </td>
+                        <td id="jumlah-kasus">
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <a class="close " href="#!">&times;</a>
+        </div>
+
+
+
+
+
+        <script>
+            // This example creates a simple polygon representing the Bermuda Triangle.
+            // When the user clicks on the polygon an info window opens, showing
+            // information about the polygon's coordinates.
+
+            var map;
+            var infoWindow;
+
+
+            $('#box .close').on('click', function() {
+                $('.box').removeClass('show');
+            })
+
+            function initMap() {
+                map = new google.maps.Map(document.getElementById("map"), {
+                    zoom: 11.5,
+                    center: {
+                        lat: -7.7277811,
+                        lng: 110.3948782
+                    },
+                    mapTypeId: 'terrain'
+                });
+
+
+                // Define the LatLng coordinates for the polygon.
+
+
+
+
+                // console.log(multiPolygon.kecamatans);
+                // Construct the polygon.
+                var brebah = [];
+                var paths = [];
+                var addListenersOnPolygon = function(polygon) {
+                    google.maps.event.addListener(polygon, 'click', function(event) {
+                        $('.box').addClass('show');
+                        $('.box .box-title h3').text(polygon.name);
+                        $('.box .box-content #jumlah-kasus').text(polygon.data);
+
+                    });
+                }
+
+                for (var i = 0; i < multiPolygon.kecamatans.length; i++) {
+                    //console.log(multiPolygon.kecamatans[i]);
+
+                    var exteriorDirection;
+                    var interiorDirection;
+                    var path = [];
+                    for (var j = 0; j < multiPolygon.kecamatans[i].coordinate.length; j++) {
+
+
+                        var lng = multiPolygon.kecamatans[i].coordinate[j][1];
+                        var lat = multiPolygon.kecamatans[i].coordinate[j][0];
+                        var ll = new google.maps.LatLng(lng, lat);
+
+
+                        path.push(ll);
+                        //console.log(path);
+                        //var marker = new google.maps.Marker({
+                        //    position: ll,
+                        //    title: "Hello World!"
+                        //});
+
+                        // To add the marker to the map, call setMap();
+                        //marker.setMap(map);
+
+
+
+                    }
+                    var opts = {};
+                    if (multiPolygon.kecamatans[i].name == "Turi") {
+                        opts.strokeColor = '#f39c12';
+                        opts.fillColor = '#f39c12';
+                        opts.fillOpacity = '0.2';
+                    } else {
+                        opts.strokeColor = '#e74c3c';
+                        opts.fillColor = '#e74c3c';
+                        opts.fillOpacity = '0.2';
+                    }
+                    opts.strokeWeight = '1';
+
+                    opts.name = multiPolygon.kecamatans[i].name;
+                    opts.data = multiPolygon.kecamatans[i].data;
+                    opts.paths = path;
+                    //console.log(multiPolygon.kecamatans[i].status);
+                    addListenersOnPolygon(opts);
+                    brebah[brebah.length] = new google.maps.Polygon(opts);
+                    console.log(brebah);
+
+
+
+                }
+                for (var i = 0; i < brebah.length; i++) {
+                    //brebah[0].setMap(map);
+                    brebah[i].setMap(map);
+
+                }
+                //console.log(opts);
+            }
+        </script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlWXTx0E64uXf39i16Yc4ouIS7EwT1WKY&callback=initMap">
+        </script>
+</body>
+
+</html>

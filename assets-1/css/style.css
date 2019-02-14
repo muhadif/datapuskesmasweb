@@ -1,0 +1,46 @@
+#map {
+    height: 100vh;
+}
+
+
+/* Optional: Makes the sample page fill the window. */
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.container-map {
+    position: absolute;
+}
+
+.box {
+    position: absolute;
+    height: 20vh;
+    width: 30vw;
+    right: 10px;
+    bottom: 0;
+    background: #ffffff;
+    box-shadow: 5px 3px 7px;
+    padding: 10px;
+    display: none;
+}
+
+.box.show {
+    display: block
+}
+
+.box h3 {
+    margin-top: 0;
+}
+
+.box .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px;
+    text-decoration: none;
+    font-size: 20px;
+}
